@@ -8,21 +8,6 @@ body, html{
     border: 0px;
 }
 
-.loginContainer{
-    text-align: center;
-}
-
-#fieldContainer{
-    align-self: center;
-    position: relative;
-    margin-top: 10%;
-    background-color: rgb(66, 66, 66);
-    color: gray;
-    padding: 6%;
-    display: inline-block;
-    text-align: left;
-}
-
 .bgBody {
     background-image: url("/static/wallafood/images/index_wallpaper.jpg");
     height: 100%;
@@ -37,4 +22,8 @@ body, html{
     left: 65%;
     /* bring your own prefixes */
     transform: translate(-50%, -65%);
-  }
+}
+
+.panel-title {
+    text-align: center;
+}
