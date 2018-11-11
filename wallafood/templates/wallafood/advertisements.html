@@ -1,0 +1,102 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Advertisements - Wallafood UPM</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href={% static 'wallafood/css/advertisements.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'edit_profile' %}>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid" id="film_info">
+        <div class="container-fluid" style="padding-block-end: 1%">
+            <form id="edittext" action={% url 'findAdvertisement' %}>
+                <div class="input-group input-group-lg">
+                    <input type="text" name="text_search" class="form-control" placeholder="Search advertisement">
+                    <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% block content %} 
+        {% if more_than_zero %} 
+        {% for element in films %}
+        <div class="list-group">
+            <div class="list-group-item container-fluid">
+                <div class="media col-md-2">
+                    <figure class="pull-left">
+                        <img class="featurette-image img-rounded img-responsive" src={{ element.url_poster }} alt="img" />
+                    </figure>
+                </div>
+                <div class="col-md-7">
+                    <h1 class="list-group-item-heading bold"> {{ element.title }} </h1>
+                    <h4 class="list-group-item-text dateColor">{{ element.date }}</h4>
+                    <h3 class="list-group-item-text bold">Overview</h3>
+                    <p class="list-group-item-text">{{ element.overview }}</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h3>Average: </h3><h3 class="bold">{{ element.vote_average }}</h3>
+                    <a type="button" class="btn btn-primary btn-lg btn-block margin-see-more" href="{% url 'doSeeMore' %}?id={{ element.id_movie | urlencode }}"
+                        role="button">See more</a>
+                </div>
+            </div>
+   
+        </div>
+        {% endfor %} 
+        {% endif %} 
+        {% endblock %}
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
