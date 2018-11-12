@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -5,6 +6,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 from . import forms
 from wallafood.models import Advert
 import logging
@@ -16,8 +23,6 @@ def index(request):
     return render(request, "wallafood/login.html", context)
 
 def register(request):
-    form = forms.CreateUserForm(request.POST)
-
     if request.method == 'POST':
         form = forms.CreateUserForm(request.POST)
 
@@ -25,6 +30,22 @@ def register(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+            
+            current_site = get_current_site(request)
+            mail_subject = 'Account activation.'
+            message = render_to_string("wallafood/email_activation.html", {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+
+            messages.info(request,'Check your email for a validation link')
             return redirect("/wallafood/login")
     else:
         form = forms.CreateUserForm()
@@ -51,7 +72,7 @@ def doLogin (request):
                     messages.error(request,'The account is not activated')
 
                 return redirect("/wallafood/login")
-            except Exception:
+            except ObjectDoesNotExist:
                 messages.error(request,'The username does not exist')
                 return redirect("/wallafood/login") 
 
@@ -163,3 +184,21 @@ def findAdvertisement(request):
             'films': films,
         } 
 """
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, ObjectDoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+
+        messages.info(request,'Account validated')
+        return redirect("/wallafood/login")
+    else:
+        messages.info(request,'Validation link invalid')
+        return redirect("/wallafood/login")
