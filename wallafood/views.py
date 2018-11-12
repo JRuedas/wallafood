@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
-
+from wallafood.models import Advert
 
 # Create your views here.
 
@@ -95,9 +95,15 @@ def change_password(request):
     
     return render(request, "wallafood/change_password.html", {'form': form,"user" : user})
 
-@login_required(login_url='/wallafood/login')
 def advertisements(request):
     context = {}
+
+
+    adverts = Advert.objects.all()
+
+    context = {
+        'adverts': adverts
+    } 
 
     return render(request, "wallafood/advertisements.html", context)
 """
@@ -115,6 +121,11 @@ def advertisements(request):
         'films': films
     } 
 """
+
+def adverts(request):
+    context = {}
+
+    return render(request, "videoclub/films.html", context)
 
 @login_required(login_url='/wallafood/login')
 def findAdvertisement(request):

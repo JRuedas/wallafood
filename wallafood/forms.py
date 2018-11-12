@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordChangeForm
 from django.forms import ModelForm
 from django import forms
+from .models import Advert
 
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(required=True,label='Username',widget=forms.TextInput(
@@ -93,3 +94,12 @@ class EditPasswordForm(PasswordChangeForm):
     ))
     class Meta:
         model = User
+
+class AdvertForm(forms.ModelForm):
+    class Meta:
+        model = Advert
+        fields = ('name', 'description', 'amout_available', 'allergens')
+        help_texts = {
+            'name': '',
+            'description': '',
+        }
