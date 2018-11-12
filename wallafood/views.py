@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
 
@@ -20,7 +21,9 @@ def register(request):
         form = forms.CreateUserForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
             return redirect("/wallafood/login")
     else:
         form = forms.CreateUserForm()
@@ -34,12 +37,22 @@ def doLogin (request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            # User authenticated
-            login(request, user)
+            login(request,user)
             return redirect("/wallafood/advertisements")
         else:
-            messages.error(request,'Incorrect user or password')
-            return redirect("/wallafood/login")
+            try:
+                user = User.objects.get_by_natural_key(username)
+
+                if user.is_active:
+
+                    messages.error(request,'The password is not correct')
+                else:
+                    messages.error(request,'The account is not activated')
+
+                return redirect("/wallafood/login")
+            except Exception:
+                messages.error(request,'The username does not exist')
+                return redirect("/wallafood/login") 
 
 @login_required(login_url='/wallafood/login')
 def doLogout (request):
