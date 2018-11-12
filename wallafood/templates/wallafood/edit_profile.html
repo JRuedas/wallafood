@@ -1,17 +1,18 @@
-<!DOCTYPE html> {% load static %}
-<html lang="en">
+<!DOCTYPE html> 
 
+{% load static %}
+
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Forbidden - Wallafood UPM</title>
+    <title>Edit profile - Wallafood UPM</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href={% static 'wallafood/css/forbidden.css' %}>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href={% static 'wallafood/css/edit_profile.css' %}>
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
@@ -26,21 +27,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href={% url 'login' %}>Wallafood Online UPM</a>
+                <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
                     <li class="profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href={% url 'edit_profile' %}>Edit profile</a>
-                            </li>
                             <li>
                                 <a href={% url 'change_password' %}>Change password</a>
                             </li>
@@ -49,22 +46,46 @@
                     <li>
                         <a href={% url 'doLogout' %}>Logout</a>
                     </li>
-                    {% endif %}
                 </ul>
             </div> <!-- /.navbar-collapse -->
         </div> <!-- /.container-fluid -->
     </nav>
 
-    <div class="container-fluid">
-        <div class="jumbotron">
-            <h1 class="text-center">403 Forbidden<p> </p><p><small class="text-center"> You're trying to do something nasty, better luck next time!</small></p></h1>
-            <p class="text-center">Try pressing the back button or clicking on this button.</p>
-            <p class="text-center"><a class="btn btn-primary" href={% url 'redirect_forbidden' %}><i class="fa fa-home"></i>Go to home</a></p>
-        </div>
+    <div  class="container">
+        {% block content %}
+        <h1>Edit profile</h1>
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="block-buttons">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success btn-sm">Update</button>
+                    <a href={% url 'advertisements' %} class="btn btn-default btn-sm">Cancel</a>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <a class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to delete your account?');" href="{% url 'delete_user' %}?username={{ user.username | urlencode }}">Delete account</a>
+            </div>
+        </form>
+        <br>
+        
+        {% if form.errors %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in field.errors %}
+                            <li><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% endblock %}
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-
 </html>

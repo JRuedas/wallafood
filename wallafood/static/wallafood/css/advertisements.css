@@ -1,0 +1,34 @@
+body{
+    font-family: 'Exo';
+    background-color: #f3f3f3;
+}
+
+.customNavbar {
+    margin-bottom: 0px;
+    border: 0px;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+#edittext {
+    padding-top: 1%
+}
+
+.dateColor {
+    color: #394450
+}
+
+.bold{
+    font-weight: bold
+}
+
+a.list-group-item {
+    height:auto;
+    min-height:300px;
+}
+
+.margin-see-more{
+    margin-block-start: 4%
+}

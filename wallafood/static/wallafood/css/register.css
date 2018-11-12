@@ -3,6 +3,7 @@ body, html{
     font-family: 'Exo';
     background-color: #f3f3f3;
 }
+
 .customNavbar {
     margin-bottom: 0px;
     border: 0px;
@@ -26,4 +27,27 @@ body, html{
 
 .panel-title {
     text-align: center;
+}
+
+.block-buttons {
+	position: relative;
+}
+
+.block-buttons .btn-group {
+	width: 100%;
+}
+
+.block-buttons button {
+    width: 50%;
+    font-size : 15px;
+}
+
+.block-buttons a {
+    width: 50%;
+    font-size : 15px;
+}
+
+.errorlist {
+    /* DO NOT REMOVE. Hides django format forms errors */
+    display: none;
 }
