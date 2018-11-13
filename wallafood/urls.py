@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from django.views.generic import RedirectView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from . import views
 
 urlpatterns = [
@@ -17,4 +18,8 @@ urlpatterns = [
     path('advertisements', views.advertisements, name='advertisements'),
     path('advertisements/search', views.findAdvertisement, name='findAdvertisement'),
     path('activate/(?P<uidb64>[0-9A-Za-z_-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', views.activate, name='activate'),
-]
+    path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
+    path('reset_password/done', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset_password/confirm/(?P<uidb64>[0-9A-Za-z_-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password/complete', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    ]
