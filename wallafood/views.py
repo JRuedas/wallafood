@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
 from wallafood.models import Advert
+import logging
 
 # Create your views here.
 
@@ -100,32 +101,33 @@ def advertisements(request):
 
 
     adverts = Advert.objects.all()
-
+    #Advert.objects.get(name=adverts[0].name).delete()
     context = {
         'adverts': adverts
     } 
 
     return render(request, "wallafood/advertisements.html", context)
-"""
-    films = Movie.objects.all()
-    more_than_zero = False
-    for movie in films:
-        more_than_zero = True
-        if movie.url_poster == 'None':
-            movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-        else:
-            movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
 
-    context = {
-        'more_than_zero': more_than_zero,
-        'films': films
-    } 
-"""
+def addAdvert(request):
+    form = forms.CreateAdvertForm(request.POST)
 
-def adverts(request):
-    context = {}
+    if request.method == 'POST':
+        form = forms.CreateAdvertForm(request.POST)
+        logger = logging.getLogger(__name__)
+        if form.is_valid():
+            #logger.error(request.POST["name"])
+            #logger.error(form['vendor'])
+            advert = form.save(commit=False)
+            advert.id_advert = 1
+            advert.vendor = "el joji"
+            advert.vote_average = 0
+            advert.status = 'avialable'
+            advert.save()
+            return redirect("/wallafood/advertisements")
+    else:
+        form = forms.CreateAdvertForm()
 
-    return render(request, "videoclub/films.html", context)
+    return render(request, "wallafood/add_advert.html", {'form': form})
 
 @login_required(login_url='/wallafood/login')
 def findAdvertisement(request):
