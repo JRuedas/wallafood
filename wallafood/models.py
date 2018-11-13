@@ -2,16 +2,16 @@ from django.db import models
 
 # Create your models here.
 class Advert(models.Model):
-    id_movie = models.IntegerField()
+    id_advert = models.IntegerField(default=0)
     name = models.CharField(max_length=200, null=False)
-    vendor = models.CharField(max_length=200, null=False)
+    vendor = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=500, null=False)
-    amout_available = models.IntegerField()
+    amount_available = models.IntegerField()
     allergens =  models.CharField(max_length=200, null=False)
-    vote_average = models.DecimalField(max_digits=3, decimal_places=2, null=False)
+    vote_average = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     status = models.CharField(max_length=20)
     #photo = models.ImageField(upload_to=user_directory_path, blank=True)
-    url = models.CharField(max_length=255, unique=True)
+    #url = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,78 @@
+<!DOCTYPE html> 
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login - Wallafood UPM</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href={% static 'wallafood/css/add_advert.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+</head>
+
+<body class="bgBody">
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
+            </div>
+        </div> <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container centered">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Add Advertisement</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <form method="POST" class="post-form">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+            
+                        <div class="form-group">
+                            <div class="block-buttons">
+                                <div class="btn-group">
+                                    <a href={% url 'advertisements' %} class="btn btn-default btn-sm">Cancel</a>
+                                    <button type="submit" class="btn btn-success btn-sm">Add</button>
+                                </div>
+                            </div>
+                        </div>
+  
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in field.errors %}
+                                            <li><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-error">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </form>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

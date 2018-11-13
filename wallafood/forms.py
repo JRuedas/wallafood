@@ -95,10 +95,33 @@ class EditPasswordForm(PasswordChangeForm):
     class Meta:
         model = User
 
-class AdvertForm(forms.ModelForm):
+class CreateAdvertForm(forms.ModelForm):
+    name = forms.CharField(required=True,label='Name',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    description = forms.CharField(required=True,label='Description',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    amount_available = forms.CharField(required=True,label='Amount',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
+    allergens = forms.CharField(required=True,label='Allergens',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
     class Meta:
         model = Advert
-        fields = ('name', 'description', 'amout_available', 'allergens')
+        fields = ('name', 'description', 'amount_available', 'allergens')
         help_texts = {
             'name': '',
             'description': '',

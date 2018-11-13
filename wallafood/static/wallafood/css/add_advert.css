@@ -1,0 +1,53 @@
+body, html{
+    height: 100%;
+    font-family: 'Exo';
+    background-color: #f3f3f3;
+}
+
+.customNavbar {
+    margin-bottom: 0px;
+    border: 0px;
+}
+
+.bgBody {
+    background-image: url("/static/wallafood/images/index_wallpaper.jpg");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 65%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -65%);
+}
+
+.panel-title {
+    text-align: center;
+}
+
+.block-buttons {
+	position: relative;
+}
+
+.block-buttons .btn-group {
+	width: 100%;
+}
+
+.block-buttons button {
+    width: 50%;
+    font-size : 15px;
+}
+
+.block-buttons a {
+    width: 50%;
+    font-size : 15px;
+}
+
+.errorlist {
+    /* DO NOT REMOVE. Hides django format forms errors */
+    display: none;
+}
