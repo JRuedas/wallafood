@@ -110,7 +110,11 @@ class CreateAdvertForm(forms.ModelForm):
 
     amount_available = forms.CharField(required=True,label='Amount',widget=forms.NumberInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'step': 1,
+            'min': '1',
+            'max': '200',
+            'value': 1
         }
     ))
 
