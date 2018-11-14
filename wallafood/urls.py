@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from django.views.generic import RedirectView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from . import views
 
 urlpatterns = [
@@ -16,5 +17,10 @@ urlpatterns = [
     path('deleteUser', views.delete_user, name='delete_user'),
     path('changePassword', views.change_password, name='change_password'),
     path('advertisements', views.advertisements, name='advertisements'),
-    path('advertisements/search', views.findAdvertisement, name='findAdvertisement')
-]
+    path('advertisements/search', views.findAdvertisement, name='findAdvertisement'),
+    path('activate/(<uidb64>[0-9A-Za-z_-]+)/(<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', views.activate, name='activate'),
+    path('reset_password/', PasswordResetView.as_view(template_name = 'wallafood/password_reset.html'), name='password_reset'),
+    path('reset_password/done', PasswordResetDoneView.as_view(template_name='wallafood/password_reset_done.html'), name='password_reset_done'),
+    path('reset_password/confirm/<uidb64>/<token>', PasswordResetConfirmView.as_view(template_name='wallafood/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset_password/complete', PasswordResetCompleteView.as_view(template_name='wallafood/password_reset_complete.html'), name='password_reset_complete'),
+    ]
