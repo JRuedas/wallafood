@@ -5,10 +5,10 @@ Aplicación web para la asignatura de IS2 escrita en Python, utilizando el frame
 ---
 ## Requisitos
 
-* Python 3.6.5
-* Django 2.1
+* Python 3.6.5 [Installation](https://www.python.org/downloads/)
+* Django 2.1 [Installation](https://docs.djangoproject.com/en/2.1/topics/install/)
 
-Para el desarrollo se puede utilizar cualquier editor de texto, es recomendable utilizar Visual Studio Code.
+Para el desarrollo se puede utilizar cualquier editor de texto, es recomendable utilizar Visual Studio Code. [Installation](https://code.visualstudio.com/)
 
 ---
 ## Ejecucion
