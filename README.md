@@ -1,4 +1,4 @@
-# Description
+# Descripcion
 
 Aplicación web para la asignatura de IS2 escrita en Python, utilizando el framework Django.
 
@@ -13,7 +13,7 @@ Para el desarrollo se puede utilizar cualquier editor de texto, es recomendable 
 ---
 ## Ejecucion
 
-Se debe tener python instalado y Django. Una vez hecho esto, el codigo se puede ejecutar utilizando el siguiente mandato de terminal:
+Posicionarse en la carpeta raiz del proyecto, "wallafood/". Y ejecutar utilizando el siguiente mandato de terminal:
 
 ```python manage.py runserver```
 
