@@ -1,6 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
+class User(AbstractUser):
+    location = models.CharField(max_length=30, blank=True)
+    photo_url = models.CharField(max_length=255, blank=True)
+    contact = models.TextField(max_length=11, blank=True)
+    preferences = models.TextField(max_length=500, blank=True)
+
+
 class Advert(models.Model):
     id_advert = models.IntegerField(default=0)
     name = models.CharField(max_length=200, null=False)
@@ -16,6 +25,7 @@ class Advert(models.Model):
     def __str__(self):
         return self.name
 
+    '''
     def cache(self):
         """Store image locally if we have a URL"""
 
@@ -26,6 +36,6 @@ class Advert(models.Model):
                     File(open(result[0], 'rb'))
                     )
             self.save()
-
+    '''
     class Meta:
         ordering = ('name',)
