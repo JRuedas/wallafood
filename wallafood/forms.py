@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordChangeForm
 from django.forms import ModelForm
 from django import forms
-from .models import Advert
+from .models import Advert, User
 
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(required=True,label='Username',widget=forms.TextInput(
@@ -29,15 +28,23 @@ class CreateUserForm(UserCreationForm):
         }
     ))
 
+    location = forms.CharField(required=True,label='Location',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Latitude,Longitude'
+        }
+    ))
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2', 'location')
         help_texts = {
             'username': '',
             'password2': '',
         }
 
 class EditProfileForm(UserChangeForm):
+
     username = forms.CharField(required=True,label='Username',widget=forms.TextInput(
         attrs={
             'class': 'form-control'
@@ -69,9 +76,37 @@ class EditProfileForm(UserChangeForm):
         }
     ))
 
+    location = forms.CharField(required=True,label='Location',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Latitude,Longitude'
+        }
+    ))
+
+    photo_url = forms. CharField(required=False, label='Photo',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'URL of your photo'
+        }
+    ))
+
+    contact = forms.CharField(required=False,label='Contact',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Phone number'
+        }
+    ))
+
+    preferences = forms.CharField(required=False,label='Preferences',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Allergen1, Allergen2, ...'
+        }
+    ))
+
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'location','photo_url','contact','preferences')
         help_texts = {
             'username': ''
         }
@@ -92,6 +127,7 @@ class EditPasswordForm(PasswordChangeForm):
             'class': 'form-control'
         }
     ))
+
     class Meta:
         model = User
 

@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'wallafood.apps.WallafoodConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wallafood.apps.WallafoodConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +81,9 @@ DATABASES = {
     }
 }
 
+# New user model
+
+AUTH_USER_MODEL = 'wallafood.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -119,6 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media files
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'is2/wallafood/media')
 
 #Email data
 EMAIL_USE_TLS = True

@@ -2,7 +2,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.admin.views.decorators import staff_member_required
@@ -13,7 +12,7 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from . import forms
-from wallafood.models import Advert
+from wallafood.models import Advert, User
 import logging
 
 # Create your views here.
@@ -132,7 +131,6 @@ def change_password(request):
 
 def advertisements(request):
     context = {}
-
 
     adverts = Advert.objects.all()
     #Advert.objects.get(name=adverts[0].name).delete()

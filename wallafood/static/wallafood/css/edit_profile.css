@@ -26,6 +26,13 @@ body{
     font-size : 15px;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+}
+
 .errorlist {
     /* DO NOT REMOVE. Hides django format forms errors */
     display: none;

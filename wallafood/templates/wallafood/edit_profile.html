@@ -51,9 +51,10 @@
         </div> <!-- /.container-fluid -->
     </nav>
 
-    <div  class="container">
+    <div class="container">
         {% block content %}
         <h1>Edit profile</h1>
+        <img class="img-responsive center" src="{{ user.photo_url }}">
         <form method="POST" class="post-form">
             {% csrf_token %}
             {{ form.as_p }}

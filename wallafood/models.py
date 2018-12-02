@@ -1,6 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
+class User(AbstractUser):
+    location = models.CharField(max_length=30, blank=True)
+    photo_url = models.CharField(max_length=255, blank=True)
+    contact = models.TextField(max_length=11, blank=True)
+    preferences = models.TextField(max_length=500, blank=True)
+
+
 class Advert(models.Model):
     id_advert = models.IntegerField(default=0)
     name = models.CharField(max_length=200, null=False)
