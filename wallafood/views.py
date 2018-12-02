@@ -146,10 +146,10 @@ def advertisements(request):
 
 def addAdvert(request):
     form = forms.CreateAdvertForm(request.POST)
-    username = request.GET.get('username')
 
     if request.method == 'POST':
         form = forms.CreateAdvertForm(request.POST)
+        username = request.GET.get('username')
         logger = logging.getLogger(__name__)
         if form.is_valid():
             #logger.error(request.POST["name"])
@@ -159,8 +159,9 @@ def addAdvert(request):
             advert.vendor = username
             advert.vote_average = 0
             advert.status = 'available'
-            advert.save()
-            advert.photo_url = "https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg"
+            if advert.photo_url == '':
+                advert.photo_url = "https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg"
+            advert.save()        
             return redirect("/wallafood/advertisements")
     else:
         form = forms.CreateAdvertForm()

@@ -19,7 +19,7 @@ class Advert(models.Model):
     allergens =  models.CharField(max_length=200, null=False)
     vote_average = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     status = models.CharField(max_length=20)
-    photo_url = models.CharField(max_length=300, default='https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg')
+    photo_url = models.CharField(max_length=300, default='')
 
     def __str__(self):
         return self.name
