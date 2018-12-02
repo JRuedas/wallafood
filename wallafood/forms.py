@@ -123,9 +123,16 @@ class CreateAdvertForm(forms.ModelForm):
             'class': 'form-control'
         }
     ))
+
+    photo_url = forms.CharField(required=False,label='Photo URL',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
     class Meta:
         model = Advert
-        fields = ('name', 'description', 'amount_available', 'allergens')
+        fields = ('name', 'description', 'amount_available', 'allergens', 'photo_url')
         help_texts = {
             'name': '',
             'description': '',

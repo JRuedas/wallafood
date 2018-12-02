@@ -77,14 +77,16 @@
         <div class="list-group">
             <div class="list-group-item container-fluid">
                 <div class="media col-md-2">
-                    <figure class="pull-left">
-                        <img class="featurette-image img-rounded img-responsive" src={{ element.url_poster }} alt="img" />
-                    </figure>
+                        <img class="featurette-image img-rounded img-responsive" src="{{ element.photo_url }}" />
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <h1 class="list-group-item-heading bold"> {{ element.name }} </h1>
+                    <p class="list-group-item-heading bold"> {{ element.description }} </p>
+                    <p class="list-group-item-heading ">Vendor: {{ element.vendor }} </p>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-4 text-center">
+                    <p class="list-group-item-heading bold"> {{ element.status }} </p>
+                    <p class="list-group-item-heading bold">Available amount: {{ element.amount_available }} </p>
                 </div>
             </div>
    

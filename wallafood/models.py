@@ -10,22 +10,10 @@ class Advert(models.Model):
     allergens =  models.CharField(max_length=200, null=False)
     vote_average = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     status = models.CharField(max_length=20)
-    #photo = models.ImageField(upload_to=user_directory_path, blank=True)
-    #url = models.CharField(max_length=255, unique=True)
+    photo_url = models.CharField(max_length=300, default='https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg')
 
     def __str__(self):
         return self.name
-
-    def cache(self):
-        """Store image locally if we have a URL"""
-
-        if self.url and not self.photo:
-            result = urllib.urlretrieve(self.url)
-            self.photo.save(
-                    os.path.basename(self.url),
-                    File(open(result[0], 'rb'))
-                    )
-            self.save()
 
     class Meta:
         ordering = ('name',)
