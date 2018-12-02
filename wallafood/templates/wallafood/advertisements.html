@@ -64,6 +64,25 @@
             <form id="edittext" action={% url 'findAdvertisement' %}>
                 <div class="input-group input-group-lg">
                     <input type="text" name="text_search" class="form-control" placeholder="Search advertisement">
+                    <li class="input-group-btn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a>My Adverts</a>
+                            </li>
+                            <li>
+                                <a >Advert Name</a>
+                            </li>
+                            <li>
+                                <a>UserName</a>
+                            </li>
+                            <li>
+                                <a>Location</a>
+                            </li>
+                        </ul>
+                    </li>
                     <div class="input-group-btn">
                         <button class="btn btn-info" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -82,7 +101,7 @@
                 <div class="col-md-6">
                     <h1 class="list-group-item-heading bold"> {{ element.name }} </h1>
                     <p class="list-group-item-heading bold"> {{ element.description }} </p>
-                    <p class="list-group-item-heading ">Vendor: {{ element.vendor }} </p>
+                    <p class="list-group-item-heading italic">Vendor: {{ element.vendor }} </p>
                 </div>
                 <div class="col-md-4 text-center">
                     <p class="list-group-item-heading bold"> {{ element.status }} </p>
