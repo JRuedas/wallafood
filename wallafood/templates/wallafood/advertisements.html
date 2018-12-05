@@ -65,50 +65,74 @@
     <div class="container-fluid" id="film_info">
         <div class="container-fluid" style="padding-block-end: 1%">
             <form id="edittext" action={% url 'findAdvertisement' %}>
-                <div class="input-group input-group-lg">
-                    <input type="text" name="text_search" class="form-control" placeholder="Search advertisement">
-                    <li class="input-group-btn">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a>My Adverts</a>
-                            </li>
-                            <li>
-                                <a >Advert Name</a>
-                            </li>
-                            <li>
-                                <a>UserName</a>
-                            </li>
-                            <li>
-                                <a>Location</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <div class="input-group-btn">
-                        <button class="btn btn-info" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
+                <div class="form-group" style="display:inline;">
+                    <div class="input-group" style="display:table;">
+                        <span class="input-group-btn btn-block" style="width:1%;">
+                            <button class="btn btn-default dropdown-toggle filter-btn" type="button" data-toggle="dropdown" >
+                                <span class="glyphicon glyphicon-filter"></span>
+                                <span class="nav-label"> Filter</span>
+                                <span class="fa fa-caret-down"></span>
+                            </button>
+                            <ul id="search-option" class="dropdown-menu pull-left" role="menu">
+                                <li>
+                                    <a href="#" data-searchtype="search-user" data-placeholder="Enter User Name (first or last)">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <span class="nav-label">My Adverts</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-searchtype="search-org" data-placeholder="Enter Organization Name">
+                                    <span class="fa fa-building-o"></span>
+                                    <span class="nav-label">By Product</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-searchtype="search-kb" data-placeholder="Enter Search Terms">
+                                    <span class="fa fa-book"></span>
+                                    <span class="nav-label">By UserName</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-searchtype="search-pl" data-placeholder="Enter Private Label">
+                                    <span class="fa fa-ticket"></span>
+                                    <span class="nav-label">By location</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
+                        <input class="form-control" name="text_search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text">
+                        <div class="input-group-btn" >
+                            <button class="btn btn-info" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
+        <br>
         {% block content %} 
         {% for element in adverts %}
         <div class="list-group">
             <div class="list-group-item container-fluid">
-                <div class="media col-md-2">
-                        <img class="featurette-image img-rounded img-responsive" src="{{ element.photo_url }}" />
+                <div class="media col-md-2 img-responsive">
+                    <img class="featurette-image img-rounded img-responsive" src="{{ element.photo_url }}" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5 container-fluid">
                     <h1 class="list-group-item-heading bold"> {{ element.name }} </h1>
                     <p class="list-group-item-heading bold"> {{ element.description }} </p>
                     <p class="list-group-item-heading italic">Vendor: {{ element.vendor }} </p>
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-3 text-center container-fluid">
                     <p class="list-group-item-heading bold"> {{ element.status }} </p>
                     <p class="list-group-item-heading bold">Available amount: {{ element.amount_available }} </p>
+                    <p class="list-group-item-heading bold">Allergens: {{ element.allergens }} </p>
+                </div>
+                <div class="input-group-btn col-md-1 btn-chat container-fluid center">
+                    <button class="btn btn-chat" type="submit">
+                        <i class="glyphicon glyphicon-comment"></i>
+                        <p>Chat with the vendor</p>
+                    </button>
                 </div>
             </div>
    
@@ -119,5 +143,10 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    $(".dropdown-menu li a").click(function(){
+        $(".filter-btn").html($(this).text()+' <span class="fa fa-caret-down"></span>');
+    });
+    </script>
 </body>
 </html>

@@ -134,13 +134,15 @@ class EditPasswordForm(PasswordChangeForm):
 class CreateAdvertForm(forms.ModelForm):
     name = forms.CharField(required=True,label='Name',widget=forms.TextInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': 'Name of your product'
         }
     ))
 
     description = forms.CharField(required=True,label='Description',widget=forms.TextInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': 'Description of your product'
         }
     ))
 
@@ -156,13 +158,15 @@ class CreateAdvertForm(forms.ModelForm):
 
     allergens = forms.CharField(required=True,label='Allergens',widget=forms.TextInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': 'Allergen 1 ; Allergen 2; ...'
         }
     ))
 
     photo_url = forms.CharField(required=False,label='Photo URL',widget=forms.TextInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': 'URL of the photo to describe your product'
         }
     ))
 

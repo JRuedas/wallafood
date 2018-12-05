@@ -21,6 +21,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 
+
 def index(request):
     context = {}
     return render(request, "wallafood/login.html", context)
@@ -133,6 +134,7 @@ def change_password(request):
     
     return render(request, "wallafood/change_password.html", {'form': form,"user" : user})
 
+@login_required(login_url='/wallafood/login')
 def advertisements(request):
     context = {}
 
@@ -144,12 +146,13 @@ def advertisements(request):
 
     return render(request, "wallafood/advertisements.html", context)
 
+@login_required(login_url='/wallafood/login')
 def addAdvert(request):
     form = forms.CreateAdvertForm(request.POST)
 
     if request.method == 'POST':
         form = forms.CreateAdvertForm(request.POST)
-        username = request.GET.get('username')
+        username = request.user.id
         logger = logging.getLogger(__name__)
         if form.is_valid():
             #logger.error(request.POST["name"])
@@ -171,24 +174,17 @@ def addAdvert(request):
 @login_required(login_url='/wallafood/login')
 def findAdvertisement(request):
     context = {}
-    return render(request, "wallafood/advertisements.html", context)
-"""
+    context = {}
+
     if request.method == 'GET':
         text = request.GET['text_search']
-        films = list(Movie.objects.raw('SELECT * FROM videoclub_movie WHERE title LIKE \'%'+text+'%\''))
-        more_than_zero = True
-
-        for movie in films:
-            if movie.url_poster == 'None':
-                movie.url_poster = 'https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-            else:
-                movie.url_poster = 'http://image.tmdb.org/t/p/w185/%s' % movie.url_poster
+        adverts = list(Advert.objects.raw('SELECT * FROM wallafood_Advert WHERE name LIKE \'%'+text+'%\''))
 
         context = {
-            'more_than_zero': more_than_zero,
-            'films': films,
+            'adverts': adverts,
         } 
-"""
+
+    return render(request, "wallafood/advertisements.html", context)
 
 def activate(request, uidb64, token):
     try:
