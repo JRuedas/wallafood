@@ -3,9 +3,20 @@ body{
     background-color: #f3f3f3;
 }
 
+.btn-chat{
+    align-content: center
+}
+
 .customNavbar {
     margin-bottom: 0px;
     border: 0px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
 }
 
 .navbar-right {
