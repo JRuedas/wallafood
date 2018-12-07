@@ -60,64 +60,11 @@
         </div> <!-- /.container-fluid -->
     </nav>
     <div class="container-fluid text-center">
-        <h1 class="bold">Advertisements</h1>
+        <h1 class="bold">My Adds</h1>
     </div> 
     <div class="container-fluid" id="film_info">
-        <div class="container-fluid" style="padding-block-end: 1%">
-            <form id="edittext" action={% url 'findAdvertisement' %}>
-                <div class="form-group" style="display:inline;">
-                    <div class="input-group" style="display:table;">
-                       <!--  <span class="input-group-btn btn-block" style="width:1%;">
-                           <button class="form-control btn btn-default dropdown-toggle"  type="button" data-toggle="dropdown" >
-                                <span class="glyphicon glyphicon-filter"></span>
-                                <span class="nav-label"> Filter</span>
-                                <span class="fa fa-caret-down"></span>
-                            </button>
-                            <ul id="search-option" class="dropdown-menu pull-left" role="menu">
-                                <li>
-                                    <a href="#" data-searchtype="search-user" name="filter" data-placeholder="Enter User Name (first or last)">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                        <span class="nav-label">My Adverts</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-searchtype="search-org" data-placeholder="Enter Organization Name">
-                                    <span class="fa fa-building-o"></span>
-                                    <span class="nav-label">By Product</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-searchtype="search-kb" data-placeholder="Enter Search Terms">
-                                    <span class="fa fa-book"></span>
-                                    <span class="nav-label">By UserName</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-searchtype="search-pl" data-placeholder="Enter Private Label">
-                                    <span class="fa fa-ticket"></span>
-                                    <span class="nav-label">By location</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </span>-->
-                        <span class="select">
-                            <select class="form-control dropdown-toggle" name='filter' id="filter" type="submit">
-                              <option value="name">By Product</option>
-                              <option value="vendor">By Vendor</option>
-                              <option value="description">By Description</option>
-                              <option value="location">By Location</option>
-                            </select>
-                        </span>
-                        <input class="form-control" name="text_search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text">
-                        <div class="input-group-btn" >
-                            <button class="btn btn-info" type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <br>
+        <br>
         <br>
         {% block content %} 
         {% for element in adverts %}
@@ -129,7 +76,6 @@
                 <div class="col-md-5 container-fluid">
                     <h1 class="list-group-item-heading bold"> {{ element.name }} </h1>
                     <p class="list-group-item-heading bold"> {{ element.description }} </p>
-                    <p class="list-group-item-heading italic">Vendor: {{ element.vendor }} </p>
                 </div>
                 <div class="col-md-3 text-center container-fluid">
                     <p class="list-group-item-heading bold"> {{ element.status }} </p>
@@ -138,8 +84,8 @@
                 </div>
                 <div class="input-group-btn col-md-1 btn-chat container-fluid center">
                     <button class="btn btn-chat" type="submit">
-                        <i class="glyphicon glyphicon-comment"></i>
-                        <p>Chat with the vendor</p>
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <p>Edit Add</p>
                     </button>
                 </div>
             </div>

@@ -11,6 +11,7 @@ urlpatterns = [
     path('doLogin', views.doLogin, name='doLogin'),
     path('doLogout', views.doLogout, name='doLogout'),
     path('addAdvert', views.addAdvert, name='addAdvert'),
+    path('my_adds', views.my_adds, name='my_adds'),
     path('forbidden', views.forbidden, name='forbidden'),
     path('redirectForbidden', views.redirect_forbidden, name='redirect_forbidden'),
     path('editProfile', views.edit_profile, name='edit_profile'),

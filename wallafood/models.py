@@ -13,7 +13,7 @@ class User(AbstractUser):
 class Advert(models.Model):
     id_advert = models.IntegerField(default=0)
     name = models.CharField(max_length=200, null=False)
-    vendor = models.CharField(max_length=200, null=True)
+    vendor = models.CharField(max_length=200, null=False)
     description = models.CharField(max_length=500, null=False)
     amount_available = models.IntegerField()
     allergens =  models.CharField(max_length=200, null=False)
