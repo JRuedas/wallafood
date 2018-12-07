@@ -23,4 +23,7 @@ urlpatterns = [
     path('reset_password/done', PasswordResetDoneView.as_view(template_name='wallafood/password_reset_done.html'), name='password_reset_done'),
     path('reset_password/confirm/<uidb64>/<token>', PasswordResetConfirmView.as_view(template_name='wallafood/password_reset_confirm.html'), name='password_reset_confirm'),
     path('reset_password/complete', PasswordResetCompleteView.as_view(template_name='wallafood/password_reset_complete.html'), name='password_reset_complete'),
+    path('chats', views.showChats ,name='showChats'),
+    path('chats/<slug>/', views.showChatDetail, name="showChatDetail"),
+    path('token', views.token, name="chatToken"),
     ]

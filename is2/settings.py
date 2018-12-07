@@ -141,8 +141,8 @@ EMAIL_HOST_PASSWORD = 'your_smpt_pass'
 EMAIL_PORT = 587
 
 #Twilio config
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', None)
-TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', None)
-TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', None)
-TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', None)
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'put your ID')
+TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', 'put your api key')
+TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', 'put your api secret')
+TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', 'put your service id')
 
