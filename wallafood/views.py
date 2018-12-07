@@ -12,8 +12,12 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from . import forms
-from wallafood.models import Advert, User
+from wallafood.models import Advert, User, Room
 import logging
+from twilio.jwt.access_token import AccessToken
+from twilio.jwt.access_token.grants import ChatGrant
+from django.conf import settings
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -200,3 +204,42 @@ def activate(request, uidb64, token):
     else:
         messages.info(request,'Validation link invalid')
         return redirect("/wallafood/login")
+
+def showChats(request):
+
+    rooms = Room.objects.all()
+    return render(request, 'wallafood/chats.html', {'rooms': rooms})
+
+
+def showChatDetail(request, slug):
+    logger = logging.getLogger(__name__)
+    logger.error(slug)
+
+    room = Room.objects.get(slug=slug)
+    return render(request, 'wallafood/chats_detail.html', {'room': room})
+
+def token(request):
+    user = request.user
+    identity = user.username
+    device_id = request.GET.get('device', 'default')  # unique device ID
+
+    account_sid = settings.TWILIO_ACCOUNT_SID
+    api_key = settings.TWILIO_API_KEY
+    api_secret = settings.TWILIO_API_SECRET
+    chat_service_sid = settings.TWILIO_CHAT_SERVICE_SID
+
+    token = AccessToken(account_sid, api_key, secret=api_secret, identity=identity)
+
+    # Create a unique endpoint ID for the device
+    endpoint = "MiniSlackChat:{0}:{1}".format(identity, device_id)
+
+    if chat_service_sid:
+        chat_grant = ChatGrant(endpoint_id=endpoint,
+                               service_sid=chat_service_sid)
+        token.add_grant(chat_grant)
+
+    response = {
+        'identity': identity,
+        'token': token.to_jwt().decode('utf-8')
+    }
+    return JsonResponse(response)
