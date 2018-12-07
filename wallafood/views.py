@@ -11,9 +11,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from math import sin, cos, sqrt, atan2, radians
 from . import forms
-from wallafood.models import Advert, User, Room
-import logging
+from wallafood.models import Advert, User
+import logging, operator
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import ChatGrant
 from django.conf import settings
@@ -137,9 +138,11 @@ def change_password(request):
 @login_required(login_url='/wallafood/login')
 def advertisements(request):
     context = {}
-
-    adverts = Advert.objects.all()
-    #Advert.objects.get(name=adverts[0].name).delete()
+    adverts = []
+    auxadverts = Advert.objects.all()
+    for add in auxadverts:
+        if request.user.username != add.vendor:
+            adverts.append(add)
     context = {
         'adverts': adverts
     } 
@@ -147,16 +150,26 @@ def advertisements(request):
     return render(request, "wallafood/advertisements.html", context)
 
 @login_required(login_url='/wallafood/login')
+def my_adds(request):
+    context = {}
+
+    username = request.user.username
+    queary= 'SELECT * FROM wallafood_Advert WHERE vendor LIKE \'%'+username+'%\''
+    adverts = list(Advert.objects.raw(queary))
+    context = {
+        'adverts': adverts
+    } 
+
+    return render(request, "wallafood/my_adds.html", context)
+
+@login_required(login_url='/wallafood/login')
 def addAdvert(request):
     form = forms.CreateAdvertForm(request.POST)
 
     if request.method == 'POST':
         form = forms.CreateAdvertForm(request.POST)
-        username = request.user.id
-        logger = logging.getLogger(__name__)
+        username = request.user.username
         if form.is_valid():
-            #logger.error(request.POST["name"])
-            #logger.error(form['vendor'])
             advert = form.save(commit=False)
             advert.id_advert = 1
             advert.vendor = username
@@ -177,8 +190,50 @@ def findAdvertisement(request):
     context = {}
 
     if request.method == 'GET':
+        logger = logging.getLogger(__name__)
         text = request.GET['text_search']
-        adverts = list(Advert.objects.raw('SELECT * FROM wallafood_Advert WHERE name LIKE \'%'+text+'%\''))
+        filter = request.GET['filter']
+        adverts = []
+        if filter != 'location':
+            logger.error(text)
+            logger.error(filter)
+            queary= 'SELECT * FROM wallafood_Advert WHERE '+filter+' LIKE \'%'+text+'%\''
+            logger.error(queary)
+            adverts = list(Advert.objects.raw(queary))
+        else:
+            queary= 'SELECT * FROM wallafood_Advert WHERE name LIKE \'%'+text+'%\''
+            auxadverts = list(Advert.objects.raw(queary))
+            location = request.user.location
+            latlong = location.split(',')
+            R = 6373.0
+            lat1 = float(latlong[0])
+            lon1 = float(latlong[1])
+            distances = {}
+            for add in auxadverts:
+                if add.vendor != request.user.username:
+                    auxlocation = User.objects.get(username=add.vendor).location
+                    auxlatlong = auxlocation.split(',')
+                    lat2 = float(auxlatlong[0])
+                    lon2 = float(auxlatlong[1])
+
+                    dlon = lon2 - lon1
+                    dlat = lat2 - lat1
+
+                    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+                    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+                    distance = R * c
+                    distances[add.name] = distance
+
+            logger.error(distances)
+            auxshorted = sorted(distances.items(), key=operator.itemgetter(1), reverse=False)
+            logger.error(auxshorted)
+            for key in auxshorted:
+                for add in auxadverts:
+                    if add.name == key[0]:
+                        adverts.append(add)
+
+        #logger.error(adverts)
 
         context = {
             'adverts': adverts,
