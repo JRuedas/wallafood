@@ -143,6 +143,7 @@ def advertisements(request):
     for add in auxadverts:
         if request.user.username != add.vendor:
             adverts.append(add)
+    
     context = {
         'adverts': adverts
     } 
@@ -171,13 +172,15 @@ def addAdvert(request):
         username = request.user.username
         if form.is_valid():
             advert = form.save(commit=False)
-            advert.id_advert = 1
             advert.vendor = username
             advert.vote_average = 0
             advert.status = 'available'
             if advert.photo_url == '':
                 advert.photo_url = "https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg"
-            advert.save()        
+            advert.save()
+
+            Room.objects.create(name=advert.id_advert, slug=advert.name, description=advert.description)
+
             return redirect("/wallafood/advertisements")
     else:
         form = forms.CreateAdvertForm()
@@ -186,7 +189,6 @@ def addAdvert(request):
 
 @login_required(login_url='/wallafood/login')
 def findAdvertisement(request):
-    context = {}
     context = {}
 
     if request.method == 'GET':
@@ -226,14 +228,14 @@ def findAdvertisement(request):
                     c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
                     distance = R * c
-                    distances[add.name] = distance
+                    distances[add.id_advert] = distance
 
             logger.error(distances)
             auxshorted = sorted(distances.items(), key=operator.itemgetter(1), reverse=False)
             logger.error(auxshorted)
             for key in auxshorted:
                 for add in auxadverts:
-                    if add.name == key[0]:
+                    if add.id_advert == key[0]:
                         adverts.append(add)
 
         #logger.error(adverts)
@@ -263,15 +265,11 @@ def activate(request, uidb64, token):
         return redirect("/wallafood/login")
 
 def showChats(request):
-
     rooms = Room.objects.all()
     return render(request, 'wallafood/chats.html', {'rooms': rooms})
 
 
 def showChatDetail(request, slug):
-    logger = logging.getLogger(__name__)
-    logger.error(slug)
-
     room = Room.objects.get(slug=slug)
     return render(request, 'wallafood/chats_detail.html', {'room': room})
 

@@ -11,11 +11,11 @@ class User(AbstractUser):
 
 
 class Advert(models.Model):
-    id_advert = models.IntegerField(default=0)
+    id_advert = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, null=False)
     vendor = models.CharField(max_length=200, null=False)
     description = models.CharField(max_length=500, null=False)
-    amount_available = models.IntegerField()
+    amount_available = models.IntegerField(default=1)
     allergens =  models.CharField(max_length=200, null=False)
     vote_average = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     status = models.CharField(max_length=20)
