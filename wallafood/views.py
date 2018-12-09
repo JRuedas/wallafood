@@ -199,7 +199,10 @@ def findAdvertisement(request):
             logger.error(filter)
             queary= 'SELECT * FROM wallafood_Advert WHERE '+filter+' LIKE \'%'+text+'%\''
             logger.error(queary)
-            adverts = list(Advert.objects.raw(queary))
+            auxadverts = list(Advert.objects.raw(queary))
+            for add in auxadverts:
+                if add.vendor != request.user.username:
+                    adverts.append(add)
         else:
             queary= 'SELECT * FROM wallafood_Advert WHERE name LIKE \'%'+text+'%\''
             auxadverts = list(Advert.objects.raw(queary))
