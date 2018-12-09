@@ -53,6 +53,9 @@
                         <a href={% url 'my_adds' %}>My Adds</a>
                     </li>
                     <li>
+                        <a href={% url 'showChats' %}>My Chats</a>
+                    </li>
+                    <li>
                         <a href={% url 'doLogout' %}>Logout</a>
                     </li>
                 </ul>
@@ -62,7 +65,7 @@
     <div class="container-fluid text-center">
         <h1 class="bold">Advertisements</h1>
     </div> 
-    <div class="container-fluid" id="film_info">
+    <div class="container-fluid">
         <div class="container-fluid" style="padding-block-end: 1%">
             <form id="edittext" action={% url 'findAdvertisement' %}>
                 <div class="form-group" style="display:inline;">
@@ -137,7 +140,7 @@
                     <p class="list-group-item-heading bold">Allergens: {{ element.allergens }} </p>
                 </div>
                 <div class="input-group-btn col-md-1 btn-chat container-fluid center">
-                    <a href={% url 'showChatDetail' slug=element.name %} class="btn btn-chat btn-sm">Chat</a>
+                    <a href={% url 'showChatDetail' slug=element.name %} class="btn btn-default middle">Chat</a>
                 </div>
             </div>
    

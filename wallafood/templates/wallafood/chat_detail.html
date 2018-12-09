@@ -1,0 +1,89 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{room.slug}} Chat - Wallafood UPM</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+  <link rel="stylesheet" href={% static 'wallafood/css/chat_detail.css' %}>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'edit_profile' %}>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'addAdvert' %}>Add Advertisement</a>
+                    </li>
+                    <li>
+                        <a href={% url 'my_adds' %}>My Adds</a>
+                    </li>
+                    <li>
+                        <a href={% url 'showChats' %}>Chats</a>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>
+
+  <div class="container">
+        <h3 class=" text-center">{{room.slug}}: {{room.description}}</h3>
+        <div class="messaging">
+              <div class="inbox_msg">
+                  <div class="messages" id="messages"></div>
+                  <div class="type_msg">
+                    <form id="write-form">
+                        <div class="input_msg_write">
+                            <input type="text" id="message-input" placeholder="Type a message" />
+                            <button type="submit" class="button">Send</button>
+                        </div>
+                    </form>
+                  </div>
+              </div>              
+            </div>
+        </div>
+
+  <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+  <script src="https://media.twiliocdn.com/sdk/js/chat/v2.0/twilio-chat.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src={% static 'wallafood/scripts/rooms.js' %}></script>
+</body>
+
+</html>
