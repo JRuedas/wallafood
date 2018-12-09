@@ -189,6 +189,31 @@ def addAdvert(request):
     return render(request, "wallafood/add_advert.html", {'form': form})
 
 @login_required(login_url='/wallafood/login')
+def edit_advert(request):
+    id = request.GET.get("id")
+    advert = Advert.objects.get(id_advert=id)
+
+    if request.method == 'POST':
+        form = forms.EditAdvertForm(request.POST, instance=advert)
+
+        if form.is_valid():
+            form.save()
+            return redirect("/wallafood/advertisements")
+    else:
+        form = forms.EditAdvertForm(instance=advert)
+        
+    return render(request, "wallafood/my_adds.html", {'form': form,"advert": advert})
+
+@login_required(login_url='/wallafood/login')
+def delete_advert(request):
+    id = request.GET.get('id')
+
+    advert = Advert.objects.get(id_advert=id)
+    advert.delete()
+    return redirect("/wallafood/my_adds.html")
+
+
+@login_required(login_url='/wallafood/login')
 def findAdvertisement(request):
     context = {}
 
@@ -262,11 +287,12 @@ def activate(request, uidb64, token):
         messages.info(request,'Validation link invalid')
         return redirect("/wallafood/login")
 
+@login_required(login_url='/wallafood/login')
 def showChats(request):
     rooms = Room.objects.all()
     return render(request, 'wallafood/chats.html', {'rooms': rooms})
 
-
+@login_required(login_url='/wallafood/login')
 def showChatDetail(request, slug):
     room = Room.objects.get(slug=slug)
     return render(request, 'wallafood/chat_detail.html', {'room': room})

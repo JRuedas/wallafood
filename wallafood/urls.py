@@ -27,4 +27,6 @@ urlpatterns = [
     path('chats', views.showChats ,name='showChats'),
     path('chats/<slug>/', views.showChatDetail, name="showChatDetail"),
     path('token', views.token, name="chatToken"),
+    path('editAdvert', views.edit_advert, name="editAdvert"),
+    path('deleteAdvert', views.delete_advert, name="deleteAdvert"),
     ]

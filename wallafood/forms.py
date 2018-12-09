@@ -177,3 +177,51 @@ class CreateAdvertForm(forms.ModelForm):
             'name': '',
             'description': '',
         }
+
+class EditAdvertForm(forms.ModelForm):
+
+    name = forms.CharField(required=True,label='Name',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Name of your product'
+        }
+    ))
+
+    description = forms.CharField(required=True,label='Description',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Description of your product'
+        }
+    ))
+
+    amount_available = forms.CharField(required=True,label='Amount',widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'step': 1,
+            'min': '1',
+            'max': '200',
+            'value': 1
+        }
+    ))
+
+    allergens = forms.CharField(required=True,label='Allergens',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Allergen 1 ; Allergen 2; ...'
+        }
+    ))
+
+    photo_url = forms.CharField(required=False,label='Photo URL',widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'URL of the photo to describe your product'
+        }
+    ))
+
+    class Meta:
+        model = Advert
+        fields = ('name', 'description', 'amount_available', 'allergens', 'photo_url')
+        help_texts = {
+            'name': '',
+            'description': '',
+        }
