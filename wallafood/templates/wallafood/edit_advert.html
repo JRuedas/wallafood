@@ -1,0 +1,92 @@
+<!DOCTYPE html> 
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Edit advert - Wallafood UPM</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href={% static 'wallafood/css/edit_advert.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="profile">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href={% url 'change_password' %}>Change password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href={% url 'doLogout' %}>Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        <h1>Edit Advert</h1>
+        <img class="img-responsive center" src="{{ advert.photo_url }}">
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="block-buttons">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success btn-sm">Update</button>
+                    <a href={% url 'my_adds' %} class="btn btn-default btn-sm">Cancel</a>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <a class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to delete your advert?');" href="{% url 'deleteAdvert' %}?id={{ advert.id_advert | urlencode }}">Delete advert</a>
+            </div>
+        </form>
+        <br>
+        
+        {% if form.errors %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in field.errors %}
+                            <li><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% endblock %}
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
