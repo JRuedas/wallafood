@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+#Env config file
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 
 
 # Quick-start development settings - unsuitable for production
@@ -135,3 +140,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'wallafood.activation@gmail.com'
 EMAIL_HOST_PASSWORD = 'Wallafoodrules'
 EMAIL_PORT = 587
+
+#Twilio config
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'AC9dbe93600a7a919decf3b05b721cdbe1')
+TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', 'SK109340a1e48f31cb5484771040952546')
+TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', 'ov3k3VD3acYL0e4hG5g6VtWwuOLoYUYC')
+TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', 'IS566a27834cff4744b5b4a04ab45115de')
+
