@@ -175,7 +175,7 @@ def addAdvert(request):
             advert = form.save(commit=False)
             advert.vendor = username
             advert.vote_average = 0
-            advert.status = 'available'
+            advert.status = 'In stock'
             if advert.photo_url == '':
                 advert.photo_url = "https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg"
             advert.save()
@@ -239,8 +239,6 @@ def findAdvertisement(request):
                     if add.id_advert == key[0]:
                         adverts.append(add)
 
-        #logger.error(adverts)
-
         context = {
             'adverts': adverts,
         } 
@@ -257,7 +255,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
 
         messages.info(request,'Account validated')
         return redirect("/wallafood/login")
@@ -272,7 +269,7 @@ def showChats(request):
 
 def showChatDetail(request, slug):
     room = Room.objects.get(slug=slug)
-    return render(request, 'wallafood/chats_detail.html', {'room': room})
+    return render(request, 'wallafood/chat_detail.html', {'room': room})
 
 def token(request):
     user = request.user

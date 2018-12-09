@@ -1,49 +1,22 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #f7f7f7;
+body{
+  font-family: 'Exo';
+  background-color: #f3f3f3;
 }
 
-section {
-  height: 70%;
-  position: fixed;
-  width: 800px;
+.customNavbar {
+  margin-bottom: 0px;
+  border: 0px;
 }
 
-#messages {
-  padding: 10px;
-  height: 100%;
-  overflow-y: auto;
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 15%;
 }
 
-#messages p {
-  margin: 5px 0;
-  padding: 0;
-}
-
-.sidebar {
-  position: fixed;
-  right: 10px;
-  height: 100%;
-  background-color: white;
-}
-
-.info {
-  margin: 5px 0;
-  font-style: italic;
-}
-
-.message-container {
-  margin: 5px 0;
-}
-
-.message-container .username {
-  display: inline-block;
-  margin-right: 5px;
-  font-weight: bold;
+.navbar-right {
+  float: right!important;
 }
 
 .me,
@@ -52,19 +25,90 @@ section {
   color: blue;
 }
 
-.message-container .username.me {
+.container{
+  max-width:1170px;
+  margin:auto;
+}
+
+.inbox_msg {
+  border: 1px solid #c4c4c4;
+  clear: both;
+  overflow: hidden;
+}
+
+.incoming_msg_img {
   display: inline-block;
-  margin-right: 5px;
+  width: 6%;
 }
 
-#message-form {
-  padding: 10px;
-  background-color: #f7f7f7;
-  position: fixed;
-  bottom: 0;
-  width: 50%;
+.received_msg {
+  display: inline-block;
+  padding: 0 0 0 10px;
+  vertical-align: top;
+  width: 92%;
 }
 
-#message-input {
-  resize: none;
+.received_withd_msg p {
+  background: #ebebeb none repeat scroll 0 0;
+  border-radius: 3px;
+  color: #646464;
+  font-size: 14px;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+}
+
+.received_withd_msg {
+   width: 57%;
+}
+
+.mesgs {
+  float: left;
+  padding: 30px 15px 0 25px;
+  width: 60%;
+}
+
+.sent_msg p {
+  background: #05728f none repeat scroll 0 0;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0; color:#fff;
+  padding: 5px 10px 5px 12px;
+  width:100%;
+}
+
+.outgoing_msg{ 
+  overflow:hidden;
+  margin:12px 0 26px;
+}
+
+.sent_msg {
+  float: right;
+  width: 46%;
+}
+
+.author {
+  width: 46%;
+}
+
+.input_msg_write input {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border: medium none;
+  color: #4c4c4c;
+  font-size: 15px;
+  min-height: 48px;
+  width: 94%;
+}
+
+.type_msg {
+  border-top: 1px solid #c4c4c4;
+  position: relative;
+}
+
+.messaging { 
+  padding: 0 0 50px 0;
+}
+
+.messages {
+  height: 516px;
+  overflow-y: auto;
 }

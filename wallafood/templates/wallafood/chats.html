@@ -1,55 +1,84 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> {% load static %}
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="//www.twilio.com/marketing/bundles/marketing/img/favicons/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css" />
-  <style>
-    .rounded-edges {
-      border-radius: 0.25rem;
-    }
-  </style>
-  <title>All Chat Rooms</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>My Chats - Wallafood UPM</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href={% static 'wallafood/css/chats.css' %}>
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 
 <body>
-  <section class="hero is-info">
-    <div class="hero-body has-text-centered">
-      <div class="container">
-        <h1 class="title is-2">
-          Twilio Chat
-        </h1>
-        <h2 class="subtitle is-5">
-          An exploration into Twilio Programmable Chat.
-          <br/> Join one of the rooms below to start your adventure
-        </h2>
-      </div>
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        {% for room in rooms %}
-        <div class="column">
-          <div class="card rounded-edges">
-            <div class="card-content">
-              <p class="title is-4">{{room.name}}</p>
-              <div class="content">
-                <p>
-                  {{room.description}}
-                </p>
-                <a href={% url 'showChatDetail' slug=room.slug  %}>Join Room</a>
-              </div>
-            </div>
+  <nav class="navbar navbar-default navbar-inverse customNavbar" role="navigation">
+      <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href={% url 'advertisements' %}>Wallafood UPM</a>
           </div>
+  
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="profile">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
+                          <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li>
+                              <a href={% url 'edit_profile' %}>Edit profile</a>
+                          </li>
+                          <li>
+                              <a href={% url 'change_password' %}>Change password</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                      <a href={% url 'addAdvert' %}>Add Advertisement</a>
+                  </li>
+                  <li>
+                      <a href={% url 'my_adds' %}>My Adds</a>
+                  </li>
+                  <li>
+                      <a href={% url 'doLogout' %}>Logout</a>
+                  </li>
+              </ul>
+          </div> <!-- /.navbar-collapse -->
+      </div> <!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid text-center">
+        <h1 class="bold">My chats</h1>
+    </div> 
+
+    <div class="chats">
+      <div class="container">
+        <div class="columns">
+            {% for room in rooms %}
+            <div class="cell">        
+              <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 item text-center">
+                <div class="element">
+                  <h1 class="short-name">{{room.slug}}</h1>
+                  <p class="name">{{room.description}}</p>
+                  <a class="btn btn-default" href={% url 'showChatDetail' slug=room.slug  %}>Open chat</a>
+                </div>
+              </div>               
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
-  </section>
 </body>
 </html>
