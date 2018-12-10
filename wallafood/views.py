@@ -198,11 +198,11 @@ def edit_advert(request):
 
         if form.is_valid():
             form.save()
-            return redirect("/wallafood/advertisements")
+            return redirect("/wallafood/my_adds")
     else:
         form = forms.EditAdvertForm(instance=advert)
         
-    return render(request, "wallafood/my_adds.html", {'form': form,"advert": advert})
+    return render(request, "wallafood/edit_advert.html", {'form': form,"advert": advert})
 
 @login_required(login_url='/wallafood/login')
 def delete_advert(request):
@@ -210,8 +210,8 @@ def delete_advert(request):
 
     advert = Advert.objects.get(id_advert=id)
     advert.delete()
-    return redirect("/wallafood/my_adds.html")
-
+    
+    return redirect("/wallafood/my_adds")
 
 @login_required(login_url='/wallafood/login')
 def findAdvertisement(request):
