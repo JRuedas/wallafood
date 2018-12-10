@@ -179,7 +179,7 @@ def addAdvert(request):
                 advert.photo_url = "https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/video_clip/2017/12/21/frutas-y-verduras.jpg"
             advert.save()
 
-            Room.objects.create(name=advert.id_advert, slug=advert.name, description=advert.description)
+            Room.objects.create(name=str(advert.id_advert) + advert.vendor, slug=advert.name, description=advert.description)
 
             return redirect("/wallafood/advertisements")
     else:
@@ -288,7 +288,7 @@ def activate(request, uidb64, token):
 
 @login_required(login_url='/wallafood/login')
 def showChats(request):
-    rooms = Room.objects.all()
+    rooms = Room.objects.filter(name__icontains=request.user.username)
     return render(request, 'wallafood/chats.html', {'rooms': rooms})
 
 @login_required(login_url='/wallafood/login')
