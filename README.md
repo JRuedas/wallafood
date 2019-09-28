@@ -1,6 +1,6 @@
 # Descripcion
 
-Aplicación web para la asignatura de IS2 escrita en Python, utilizando el framework Django.
+Aplicación web para la asignatura de Ingenieria de Software 2 del curso 2017-2018 escrita en Python, utilizando el framework Django.
 
 ---
 ## Requisitos
